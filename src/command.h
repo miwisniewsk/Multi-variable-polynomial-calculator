@@ -12,7 +12,7 @@
 #include "line.h"
 
 /**
- * Funkcja wstawia na szczyt stosu wielomian równy zeru.
+ * The function inserts a polynomial equal to zero at the top of the stack.
  * @param[out] Stack : stack
  */
 void ZERO(stack *Stack);
