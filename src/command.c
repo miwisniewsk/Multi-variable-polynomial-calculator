@@ -1,5 +1,5 @@
 /** @file
-  Implementacja komend zawartych w pliku command.h
+  Implementation of the commands contained in the command.h file
 
   @author Maja Wiśniewska <mw429666.students.mimuw.edu.pl>
   @date 2021
