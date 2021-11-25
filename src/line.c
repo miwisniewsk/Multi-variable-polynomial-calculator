@@ -1,5 +1,5 @@
 /** @file
-  Plik zawiera implementację funkcji tworzenia i powiększania wiersza
+  The file contains an implementation of the row creation and augmentation functionality
 
   @author Maja Wiśniewska <mw429666.students.mimuw.edu.pl>
   @date 2021
@@ -21,8 +21,8 @@ line *createaLine(void) {
 }
 
 /**
- * Prosta funkcja zwracająca w przybliżeniu podwojoną wartość.
- * @param[in] n : liczba całkowita
+ * A simple function that returns approximately twice the value.
+ * @param[in] n : integer
  * @return result
  */
 static size_t more(size_t n) {
