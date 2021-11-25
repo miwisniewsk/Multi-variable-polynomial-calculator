@@ -1,6 +1,6 @@
 /** @file
-  Implementacja funkcji zadeklarowanych w pliku poly.h 
-  na wielomianach rzadkich wielu zmiennych.
+  Implementation of functions declared in the poly.h file
+  on rare polynomials of many variables
 
   @author Maja Wiśniewska <mw429666.students.mimuw.edu.pl>
   @date 2021
@@ -41,11 +41,11 @@ void PolyDestroy(Poly *p) {
 }
 
 /**
- * W funkcji PolyCloneHelp dodaję parametr neq, aby móc ją wykorzystać do tworzenia
- * wielomianów przeciwnych. Kopijąc wielomiany podaję neq = 1, a tworząc przeciwne neq = -1.
- * @param[in] p : wielomian
- * @param[out] r : wielomian
- * @param[in] neq : znak
+ * In the PolyCloneHelp function, I add a neq parameter so that I can use it for authoring
+ * opposite polynomials. Copying polynomials I give neq = 1, and creating opposite neq = -1.
+ * @param[in] p : polynomial
+ * @param[out] r : polynomial
+ * @param[in] neq : sign
  */
 static void PolyCloneHelp(const Poly *p, Poly *r, int neq) {
     assert(p != NULL && r != NULL);
@@ -75,10 +75,10 @@ Poly PolyClone(const Poly *p) {
 }
 
 /**
- * Funkcja do porównywania jednomianów.
- * @param[in] a : wskaźnik
- * @param[in] b : wskaźnik
- * @return znak
+ * Function for comparing monomials.
+ * @param[in] a : pointer
+ * @param[in] b : pointer
+ * @return sign
  */
 static int compareMonos(const void * a, const void * b) {
     const Mono *pa = a;
@@ -94,8 +94,8 @@ static int compareMonos(const void * a, const void * b) {
 }
 
 /**
- * Funkcja PolyMonosClean skleja jednomiany o tych samych współczynnikach.
- * @param[in,out] r : wielomian
+ * The PolyMonosClean function concatenates monomials with the same coefficients.
+ * @param[in,out] r : polynomial
  */
 static void PolyMonosClean(Poly *r) {
     assert(!PolyIsCoeff(r));
@@ -124,10 +124,10 @@ static void PolyMonosClean(Poly *r) {
 }
 
 /**
- * Funkcja reductionToCoeff upraszcza wielomiany, które się da, do wielomianów stałych, 
- * np. 2 * x_0^0 * x_1^0 upraszcza do 2.
- * @param[in,out] r : wielomian
- * @param[out] i : współczynnik
+ * The reductionToCoeff function simplifies the polynomials possible to constant polynomials,
+ * e.g. 2 * x_0^0 * x_1^0 simplifies to 2.
+ * @param[in,out] r : polynomial
+ * @param[out] i : coefficient
  */
 static void reductionToCoeff(Poly *r, poly_coeff_t *i) {
     if (!PolyIsCoeff(r)) {
@@ -142,8 +142,8 @@ static void reductionToCoeff(Poly *r, poly_coeff_t *i) {
 }
 
 /**
- * Funkcja reduction szuka wielomianów które się da uprościć i je upraszcza.
- * @param[in,out] r : wielomian
+ * The reduction function looks for polynomials that can be simplified and simplifies them.
+ * @param[in,out] r : polynomial
  */
 static void reduction(Poly *r) {
     if (!PolyIsCoeff(r)) {
@@ -160,8 +160,8 @@ static void reduction(Poly *r) {
 }
 
 /**
- * Funkcja PolyCleanZero usuwa zera z wielomianu niebędącego wielomianem stałym.
- * @param[in,out] r : wielomian
+ * PolyCleanZero function removes zeros from non-constant polynomial.
+ * @param[in,out] r : polynomial
  */
 static void PolyCleanZero(Poly *r) {
     assert(r != NULL);
@@ -183,9 +183,9 @@ static void PolyCleanZero(Poly *r) {
 }
 
 /**
- * Funkcja PolyClean szuka wielomianów równych wielomianom stałym 
- * i upraszcza je do wielomianów stałych, jeśli nimi nie były oraz usuwa zera.
- * @param[in,out] r : wielomian
+ * The PolyClean function looks for polynomials equal to constant polynomials
+ * and simplifies them to constant polynomials if they were not, and removes the zeros.
+ * @param[in,out] r : polynomial
  */
 static void PolyClean(Poly *r) {
     if (PolyIsZero(r)) {
@@ -199,19 +199,19 @@ static void PolyClean(Poly *r) {
 }
 
 /**
- * Funkcja PolyAddHelp sprawdza, które wielomiany są stałe i 
- * przekazuje je do odpowiednich funkcji dodających.
- * @param[in] p : wielomian
- * @param[in] q : wielomian
- * @param[out] r : wielomian
+ * The PolyAddHelp function checks which polynomials are constants and
+ * passes them to the appropriate adding functions.
+ * @param[in] p : polynomial
+ * @param[in] q : polynomial
+ * @param[out] r : polynomial
  */
 static void PolyAddHelp(const Poly *p, const Poly *q, Poly *r);
 
 /**
- * Funkcja oneCoeffAdd dodaje stałą do wielomianu.
- * @param[in] p : wielomian
- * @param[out] r : wielomian
- * @param[in] c : współczynnik
+ * The oneCoeffAdd function adds a constant to the polynomial.
+ * @param[in] p : polynomial
+ * @param[out] r : polynomial
+ * @param[in] c : coefficient
  */
 static void oneCoeffAdd(const Poly *p, Poly *r, poly_coeff_t c) {
     assert(p != NULL && p->arr != NULL);
@@ -241,10 +241,10 @@ static void oneCoeffAdd(const Poly *p, Poly *r, poly_coeff_t c) {
 }
 
 /**
- * Funkcja noCoeffAdd dodaje do siebie dwa wielomiany niebędące wielomianami stałymi.
- * @param[in] p : wielomian
- * @param[in] q : wielomian
- * @param[out] r : wielomian
+ * The noCoeffAdd function adds two non-constant polynomials together.
+ * @param[in] p : polynomial
+ * @param[in] q : polynomial
+ * @param[out] r : polynomial
  */
 static void noCoeffAdd(const Poly *p, const Poly *q, Poly *r) {
     assert(p != NULL && q != NULL);
@@ -326,10 +326,11 @@ Poly PolyAddMonos(size_t count, const Mono monos[]) {
 static void PolyMulHelp(const Poly *p, const Poly *q, Poly *r);
 
 /**
- * Funkcja oneCoeffMul mnoży wielomian przez sklalar, wynik mnożenia zapisuje na wielomianie r
- * @param[in] p : wielomian
- * @param[in] q : współczynnik
- * @param[out] r : wielomian
+ * The oneCoeffMul function multiplies the polynomial by a scalar, 
+ * writes the result of the multiplication to the polynomial r
+ * @param[in] p : polynomial
+ * @param[in] q : coefficient
+ * @param[out] r : polynomial
  */
 static void oneCoeffMul(const Poly *p, poly_coeff_t q, Poly *r) {
     assert(p != NULL);
@@ -348,10 +349,10 @@ static void oneCoeffMul(const Poly *p, poly_coeff_t q, Poly *r) {
 }
 
 /**
- * Funkcja noCoeffMul mnoży dwa wielomiany niebędące wielomianami stałymi.
- * @param[in] p : wielomian
- * @param[in] q : wielomian
- * @param[out] r : wielomian
+ * The noCoeffMul function multiplies two non-property polynomials.
+ * @param[in] p : polynomial
+ * @param[in] q : polynomial
+ * @param[out] r : polynomial
  */
 static void noCoeffMul(const Poly *p, const Poly *q, Poly *r) {
     assert(p != NULL && q != NULL);
@@ -370,11 +371,11 @@ static void noCoeffMul(const Poly *p, const Poly *q, Poly *r) {
 }
 
 /**
- * Funkcja PolyMulHelp sprawdza, które wielomiany są stałe i 
- * przekazuje je do odpowiednich funkcji mnożących.
- * @param[in] p : wielomian
- * @param[in] q : wielomian
- * @param[out] r : wielomian
+ * The PolyMulHelp function checks which polynomials are constants and
+ * passes them to the appropriate multiplication functions.
+ * @param[in] p : polynomial
+ * @param[in] q : polynomial
+ * @param[out] r : polynomial
  */
 static void PolyMulHelp(const Poly *p, const Poly *q, Poly *r) {
     assert(p != NULL && q != NULL);
@@ -426,12 +427,12 @@ Poly PolySub(const Poly *p, const Poly *q) {
 }
 
 /**
- * Funkcja PolyDegByHelp oblicza stopień wielomianu po danej zmiennej, zapisując
- * stopeiń danego jednomianu i sprawdzając czy jest on największy.
- * @param[in] p : wielomian
- * @param[in,out] exp_max : współczynnik
- * @param[in,out] index : indeks
- * @param[in] var_idx : indeks
+ * The PolyDegByHelp function calculates the degree of the polynomial over a given variable by saving
+ * the degree of a given monomial and checking if it is the greatest.
+ * @param[in] p : polynomial
+ * @param[in,out] exp_max : coefficient
+ * @param[in,out] index : index
+ * @param[in] var_idx : index
  */
 static void PolyDegByHelp(const Poly *p, poly_exp_t *exp_max, size_t *index, size_t var_idx) {
     assert(p != NULL);
@@ -488,14 +489,14 @@ poly_exp_t PolyDeg(const Poly *p) {
 }
 
 /**
- * Funkcja PolyIsEqHelp jest funkcją pomocniczą do PolyIsEq, ma 
- * dodatkowy parametr typu bool ustawiony początkowo na true, który zmienia się na 
- * false widząc jakąkolwiek różnicę w wielomianach. Ta funkcja uznałaby 
- * wielonian 0*x i 2x^2 oraz 2x^2 za różne. Jednak pozostałe funkcje tworzące 
- * wielomiany nie dopuszczają, aby takie wielomiany powstawały.
- * @param[in] p : wielomian
- * @param[in] q : wielomian
- * @param[out] equal: Czy są równe?
+* The PolyIsEqHelp function is a helper to PolyIsEq, has
+ * additional bool type parameter initially set to true, which changes to
+ * false when seeing any difference in the polynomials. This feature would consider
+ * polynon 0 * x and 2x ^ 2 and 2x ^ 2 for different. However, the rest of the creating functions
+ * polynomials do not allow such polynomials to arise.
+ * @param[in] p : polynomial
+ * @param[in] q : polynomial
+ * @param[out] equal: Are they equal?
  */
 static void PolyisEqHelp(const Poly *p, const Poly *q, bool *equal) {
     assert(p != NULL && q != NULL);
@@ -535,9 +536,9 @@ bool PolyIsEq(const Poly *p, const Poly *q) {
 }
 
 /**
- * Funkcja countMonos liczy ile jednomianów powstanie po podstawieniu danej wartości za x_0.
- * @param[in] p : wielomian
- * @return ilość jednomianów ktore powstaną
+ * The countMonos function counts how many monomials will arise after substituting a given value with x_0.
+ * @param[in] p : polynomial
+ * @return the number of monomials that will arise
  */
 static size_t countMonos(const Poly *p) {
     size_t count = 0;
@@ -554,10 +555,10 @@ static size_t countMonos(const Poly *p) {
 }
 
 /**
- * Funkcja exponentiation potęguje wykładniki.
- * @param[in] x : współćzynnik
- * @param[in] n : wykładnik
- * @return wynik potęgowania
+ * The exponentiation function enhances the exponents.
+ * @param[in] x : coefficient
+ * @param[in] n : exponent
+ * @return exponentiation result
  */
 static poly_coeff_t exponentiation(poly_coeff_t x, poly_exp_t n) {
     poly_coeff_t wynik = 1;
@@ -568,10 +569,10 @@ static poly_coeff_t exponentiation(poly_coeff_t x, poly_exp_t n) {
 }
 
 /**
- * Funkcja tworzy listę jednomianów poprzez podstawianie danej wartości za x_0.
- * @param[in,out] monos : tablica jednomianów
- * @param[in] p : wielomian
- * @param[in] x : wykładnik
+ * The function creates a list of monomials by substituting the given value with x_0.
+ * @param[in,out] monos : table of monomials
+ * @param[in] p : polynomial
+ * @param[in] x : exponent
  */
 static void createMonos(Mono *monos, const Poly *p, poly_coeff_t x) {
     size_t i = 0;
@@ -621,8 +622,8 @@ Poly PolyAt(const Poly *p, poly_coeff_t x) {
 void PrintPoly(const Poly *p);
 
 /**
- * Funkcja PrintMono wypisuje jednomian.
- * @param[in] m : jednomian
+ * The PrintMono function prints the monomial.
+ * @param[in] m : monomial
  */
 static void PrintMono(const Mono *m) {
     printf("(");
@@ -693,11 +694,11 @@ Poly PolyExp(const Poly *p, poly_exp_t exp) {
 }
 
 /**
- * Funkcja PolyAddPolos dodaje wszystkie wielomiany w tablicy i 
- * zwraca wynik tego dodawania.
- * @param[in] k : rozmiar tablicy
- * @param[in] q : tablica wielomainów
- * @return wielomian
+ * The PolyAddPolos function adds all the polynomials in the array and
+ * returns the result of this addition.
+ * @param[in] k : array size
+ * @param[in] q : array of polynomials
+ * @return polynomial
  */
 static Poly PolyAddPolos(size_t k, const Poly q[]) {
     Poly r = PolyZero();
