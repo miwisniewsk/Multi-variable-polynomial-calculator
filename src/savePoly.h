@@ -1,5 +1,5 @@
 /** @file
-  Plik zawiera interfejs funkcji zapisywania wielomianu
+  The file contains the interface of the polynomial saving function
 
   @author Maja Wiśniewska <mw429666.students.mimuw.edu.pl>
   @date 2021
@@ -9,11 +9,11 @@
 #define __SAVEPOLY_H__
 
 /**
- * Funkcja wczytuje wielomian i jeśli nie wykryto błędu to wkłada go
- * na wierzch stosu, w przeciwnym wypadku wypisuje odpowiedni komunikat.
- * @param[in] Line : wiersz
- * @param[in,out] Stack : stos
- * @param[in] numberofLine : numer wiersza
+ * The function reads the polynomial and inserts it if no error is found
+ * on top of the stack, otherwise it prints the appropriate message.
+ * @param[in] Line : line
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of line
  */
 void savePoly(const line *Line, stack *Stack, size_t numberofLine);
 
