@@ -1,5 +1,5 @@
 /** @file
-  Plik zawiera implementację funkcji zapisywania wielomianu
+  The file contains an implementation of the polynomial saving function
 
   @author Maja Wiśniewska <mw429666.students.mimuw.edu.pl>
   @date 2021
@@ -15,11 +15,11 @@
 static void savePolyHelp(size_t start, size_t stop, const line *Line, Poly *p, bool *correctPoly);
 
 /**
- * Funkcja szuka indeksu, który odróżnia dwie współrzędne jednomianu.
- * @param[in] start : indeks początkowy
- * @param[in] stop : indeks końcowy
- * @param[in] Line : wiersz
- * @return indeks przecinka
+ * The function looks for an index that distinguishes between the two coordinates of the monomial.
+ * @param[in] start : starting index
+ * @param[in] stop : end index
+ * @param[in] Line : line
+ * @return comma index
  */
 static size_t searchComma(size_t start, size_t stop, const line *Line) {
     size_t opening = 0;
@@ -40,12 +40,12 @@ static size_t searchComma(size_t start, size_t stop, const line *Line) {
 }
 
 /**
- * Funkcja sprawdza, czy wczytana wartość wykładnika jest poprawna.
- * @param[in] Line : wiersz
- * @param[in] x : wartość wykładnika
- * @param[in] start : indeks początkowy
- * @param[in] stop : indeks końcowy
- * @return Czy poprawna wartość?
+ * The function checks if the read exponent value is correct.
+ * @param[in] Line : line
+ * @param[in] x : exponent value
+ * @param[in] start : starting index
+ * @param[in] stop : end index
+ * @return Is the value correct?
  */
 static bool correctExp(const line *Line, long int x, size_t start, size_t stop) {
     bool correct = Line->letters[start] >= '0' && Line->letters[start] <= '9';
@@ -63,13 +63,13 @@ static bool correctExp(const line *Line, long int x, size_t start, size_t stop) 
 }
 
 /**
- * Funkcja zwraca wartośc wykładnika jednomianu, w przypadku błędu
- * zapisuje ten fakt na zmiennej correct.
- * @param[in] Line : wiersz
- * @param[in] start : indeks początkowy
- * @param[in] stop : indeks końcowy
- * @param[out] correct : czy poprawny wielomian?
- * @return wartość wykładnika jednomianu
+ * The function returns the exponent of the monomial on error
+ * saves this fact in the variable correct.
+ * @param[in] Line : line
+ * @param[in] start : starting index
+ * @param[in] stop : end index
+ * @param[out] correct : Is the polynomial correct?
+ * @return the value of the exponent of the monomial
  */
 static poly_exp_t saveExp(const line *Line, size_t start, size_t stop, bool *correct) {
     poly_exp_t k;
@@ -89,14 +89,14 @@ static poly_exp_t saveExp(const line *Line, size_t start, size_t stop, bool *cor
 }
 
 /**
- * Zapisuje w tablicy jednomianów monos jednomian, który znajduje się między
- * podanymi indeksami w wierszu.
- * @param[in] start : indeks początkowy w wierszu
- * @param[in] stop : indeks końcowy w wierszu
- * @param[in] i : indeks w tablicy jednomianów
- * @param[out] monos: tablica jednomianów
- * @param[in] Line : wiersz znaków
- * @param[in,out] correctPoly : Czy poprawny wielomian?
+ * Writes to the monomial table the monomial that is between
+ * with the given indices in the row.
+ * @param[in] start : starting index on the row
+ * @param[in] stop : end index on the line
+ * @param[in] i : the index in the monomial array
+ * @param[out] monos: table of monomials
+ * @param[in] Line : line of characters
+ * @param[in,out] correctPoly : Is the polynomial correct?
  */
 static void saveMono(size_t start, size_t stop, size_t i, Mono *monos, 
         const line *Line, bool *correctPoly) {
@@ -118,12 +118,12 @@ static void saveMono(size_t start, size_t stop, size_t i, Mono *monos,
 }
 
 /**
- * Funkcja sprawdza, czy wczytana wartość współczynnika jest poprawna
- * @param[in] Line : wiersz
- * @param[in] x : wartość współczynnika
- * @param[in] start : indeks początkowy
- * @param[in] stop : indeks końcowy
- * @return Czy poprawna wartość?
+ * The function checks if the read value of the coefficient is correct
+ * @param[in] Line : line
+ * @param[in] x : value of the coefficient
+ * @param[in] start : starting index
+ * @param[in] stop : end index
+ * @return Is the value correct?
  */
 static bool correctCoeff(const line *Line, llint x, size_t start, size_t stop) {
     bool correct = Line->letters[start] == '-' ||
@@ -152,14 +152,14 @@ static bool correctCoeff(const line *Line, llint x, size_t start, size_t stop) {
 }
 
 /**
- * Zapisuje wielomian stały, który znajduje się między podanymi indeksami w wierszu.
- * Jeśli podczas wczytywania wielomianu występuje błąd to zapisuje 
- * ten fakt na zmiennej correctPoly.
- * @param[in] Line : wiersz
- * @param[in] start : indeks początkowy
- * @param[in] stop : indeks końcowy
- * @param[out] correctPoly : Czy poprawny wielomian?
- * @param[out] p : wielomian
+  * Writes a constant polynomial that is between the given indices on a line.
+ * If there is an error when loading the polynomial, it saves
+ * this fact on the correctPoly variable.
+ * @param[in] Line : line
+ * @param[in] start : starting index
+ * @param[in] stop : end index
+ * @param[out] correctPoly : Is the polynomial correct?
+ * @param[out] p : polynomial
  */
 static void saveCoeff(const line *Line, size_t start, size_t stop, bool *correctPoly, Poly *p) {
     char* end;
@@ -173,11 +173,11 @@ static void saveCoeff(const line *Line, size_t start, size_t stop, bool *correct
 }
 
 /**
- * Funkcja szuka końca danego jednomianu.
- * @param[in] start : indeks początkowy
- * @param[in] stop : indeks końcowy
- * @param[in] Line : wiersz
- * @return indeks nawiasu zamykającego.
+ * The function searches for the end of a given monomial.
+ * @param[in] start : starting index
+ * @param[in] stop : end index
+ * @param[in] Line : line
+ * @return the index of the closing brace.
  */
 static size_t searchClosePar(size_t start, size_t stop, const line *Line) {
     size_t opening = 0;
@@ -197,11 +197,11 @@ static size_t searchClosePar(size_t start, size_t stop, const line *Line) {
 }
 
 /**
- * Funkcja liczy z ilu jednomianów skłąda się dany wielomian.
- * @param[in] Line : wiersz
- * @param[in] start : indeks początkowy
- * @param[in] stop : indeks końcowy
- * @return liczba jednomianów
+ * The function counts how many monomials a given polynomial consists of.
+ * @param[in] Line : line
+ * @param[in] start : strting index
+ * @param[in] stop : end index
+ * @return number of monomials
  */
 static size_t countMonos(const line *Line, size_t start, size_t stop) {
     size_t opening = 0;
@@ -224,15 +224,15 @@ static size_t countMonos(const line *Line, size_t start, size_t stop) {
 }
 
 /**
- * Funkcja zapisuje jednomiany między nawiasami i sprawdza, czy są poprawnie zapisane.
- * Jeśli podczas wczytywania wielomianu występuje błąd to zapisuje
- * ten fakt na zmiennej correctPoly.
- * @param[in] start : indeks początkowy
- * @param[in] stop : indeks końcowy
- * @param[in] numberofMonos : liczba jednomianów w tablicy
- * @param[out] monos : tablica jednomianów
- * @param[in] Line : wiersz znaków
- * @param[out] correctPoly : Czy poprawny wielomian?
+ * The function writes monomials between the parentheses and checks that they are spelled correctly.
+ * If there is an error when loading the polynomial, it saves
+ * this fact on the correctPoly variable.
+ * @param[in] start : starting index
+ * @param[in] stop : end index
+ * @param[in] numberofMonos : the number of monomials in the array
+ * @param[out] monos : table of monomials
+ * @param[in] Line : line of characters
+ * @param[out] correctPoly : Is the polynomial correct?
  */
 static void PolySaveMonos(size_t start, size_t stop, size_t numberofMonos, Mono *monos,
         const line *Line, bool *correctPoly) {
@@ -260,14 +260,14 @@ static void PolySaveMonos(size_t start, size_t stop, size_t numberofMonos, Mono 
 }
 
 /**
- * Zapisuje wielomian, który znajduje się między podanymi indeksami w wierszu.
- * Jeśli podczas wczytywania wielomianu występuje błąd to zapisuje
- * ten fakt na zmiennej correctPoly.
- * @param[in] start : indeks początkowy
- * @param[in] stop : indeks końcowy
- * @param[in] Line : wiersz znaków
+ * Writes the polynomial that is between the given indices on a line.
+ * If there is an error when loading the polynomial, it saves
+ * this fact on the correctPoly variable.
+ * @param[in] start : starting index
+ * @param[in] stop : end index
+ * @param[in] Line : line
  * @param[out] p : wielomian
- * @param[in,out] correctPoly : Czy poprawny wielomian?
+ * @param[in,out] correctPoly : Is the polynomial correct?
  */
 static void savePolyHelp(size_t start, size_t stop, const line *Line, Poly *p, bool *correctPoly) {
     if (Line->letters[start] == '(') {
