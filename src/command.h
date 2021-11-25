@@ -1,5 +1,5 @@
 /** @file
-  Interfejs komend stosu
+  Stack command interface
 
   @author Maja Wiśniewska <mw429666.students.mimuw.edu.pl>
   @date 2021
@@ -13,129 +13,130 @@
 
 /**
  * Funkcja wstawia na szczyt stosu wielomian równy zeru.
- * @param[out] Stack : stos
+ * @param[out] Stack : stack
  */
 void ZERO(stack *Stack);
 
 /**
- * Funkcja sprawdza, czy wielomian z wierzchołka stosu jest wielomianem stałym.
- * W przypadku pustego stostu wypisuje komunikat błędu.
- * @param[in] Stack : stos
- * @param[in] numberofLine : numer wiersza
+ * The function checks if the polynomial at the top of the stack is a constant polynomial.
+ * Prints an error message in case of an empty stack.
+ * @param[in] Stack : stack
+ * @param[in] numberofLine : number of line
  */
 void IS_COEFF(const stack *Stack, size_t numberofLine);
 
 /**
- * Funkcja sprawdza, czy wielomian z wierzchołka stosu jest równy 0.
- * W przypadku pustego stostu wypisuje komunikat błędu.
- * @param[in] Stack : stos
- * @param[in] numberofLine : numer wiersza
+ * The function checks if the polynomial at the top of the stack is 0.
+ * Prints an error message in case of an empty stack.
+ * @param[in] Stack : stack
+ * @param[in] numberofLine : number of line
  */
 void IS_ZERO(const stack *Stack, size_t numberofLine);
 
 /**
- * Funkcja kopiuje wielomian z wierzchołka.
- * W przypadku pustego stostu wypisuje komunikat błędu.
- * @param[in,out] Stack : stos
- * @param[in] numberofLine : numer wiersza
+ * The function copies the polynomial from the vertex.
+ * Prints an error message in case of an empty stack.
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of line
  */
 void CLONE(stack *Stack, size_t numberofLine);
 
 /**
- * Funkcja dodaje dwa wielomiany z wierzchu stosu, 
- * usuwa je i wstawia na wierzchołek stosu ich sumę.
- * W przypadku za małej ilości wielomianów na stosie wypisuje komunikat błędu.
- * @param[in,out] Stack : stos
- * @param[in] numberofLine : numer wiersza
+ * The function adds two polynomials from the top of the stack,
+ * removes them and puts their sum at the top of the stack.
+ * In case of too few polynomials on the stack, it prints an error message.
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of line
  */
 void ADD(stack *Stack, size_t numberofLine);
 
 /**
- * Funkcja mnoży dwa wielomiany z wierzchu stosu, 
- * usuwa je i wstawia na wierzchołek stosu ich iloczyn.
- * W przypadku za małej ilości wielomianów na stosie wypisuje komunikat błędu.
- * @param[in,out] Stack : stos
- * @param[in] numberofLine : numer wiersza
+ * The function multiplies the two polynomials from the top of the stack,
+ * removes them and puts their product at the top of the stack.
+ * In case of too few polynomials on the stack, it prints an error message.
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of line
  */
 void MUL(stack *Stack, size_t numberofLine);
 
 /**
- * Funkcja neguje wielomian na wierzchołku stosu.
- * W przypadku pustego stosu wypisuje komunikat błędu.
- * @param[in,out] Stack : stos
- * @param[in] numberofLine : numer wiersza
+ * The function negates the polynomial at the top of the stack.
+ * Prints an error message in case of an empty stack.
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of line
  */
 void NEG(stack *Stack, size_t numberofLine);
 
 /**
- * Funkcja odejmuje od wielomianu z wierzchołka wielomian pod wierzchołkiem, 
- * usuwa je i wstawia na wierzchołek stosu różnicę.
- * W przypadku za małej ilości wielomianów na stosie wypisuje komunikat błędu.
- * @param[in,out] Stack : stos
- * @param[in] numberofLine : numer wiersza
+ * The function subtracts from the polynomial at the vertex, the polynomial at the vertex,
+ * removes them and puts the difference on top of the stack.
+ * In case of too few polynomials on the stack, it prints an error message.
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of line
  */
 void SUB(stack *Stack, size_t numberofLine);
 
 /**
- * Funkcja sprawdza, czy dwa wielomiany na wierzchu stosu są równe 
- * – wypisuje na standardowe wyjście 0 lub 1.
- * W przypadku za małej ilości wielomianów na stosie wypisuje komunikat błędu.
- * @param[in] Stack : stos
- * @param[in] numberofLine : numer wiersza
+ * The function checks if the two polynomials on the top of the stack are equal
+ * - writes 0 or 1 to the standard output.
+ * In case of too few polynomials on the stack, it prints an error message.
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of line
  */
 void IS_EQ(stack *Stack, size_t numberofLine);
 
 /**
- * Funkcja wypisuje na standardowe wyjście stopień wielomianu.
- * W przypadku pustego stosu wypisuje komunikat błędu.
- * @param[in] Stack : stos
- * @param[in] numberofLine : numer wiersza
+ * The function prints the degree of the polynomial to the standard output.
+ * Prints an error message in case of an empty stack.
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of line
  */
 void DEG(const stack *Stack, size_t numberofLine);
 
 /**
- * Funkcja wypisuje na standardowe wyjście stopień wielomianu 
- * ze względu na zmienną o numerze idx.
+ * The function prints the degree of the polynomial to the standard output
+ * due to the variable number idx.
  * W przypadku pustego stosu lub złego indeksu wypisuje komunikat błędu.
- * @param[in] Stack : stos
- * @param[in] numberofLine : numer wiersza
- * @param[in] Line : wiersz
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of line
+ * @param[in] Line : line
  */
 void DEG_BY(const stack *Stack, size_t numberofLine, const line *Line);
 
 /**
- * Funkcja wylicza wartość wielomianu w punkcie x, 
- * usuwa wielomian z wierzchołka i wstawia na stos wynik operacji.
- * W przypadku pustego stosu lub złego indeksu wypisuje komunikat błędu.
- * @param[in,out] Stack : stos
- * @param[in] numberofLine : numer wiersza
- * @param[in] Line : wiersz
+ * The function calculates the value of the polynomial at the point x,
+ * removes the polynomial from the vertex and puts the result of the operation on the stack.
+ * Prints an error message in case of an empty stack or bad index.
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of line
+ * @param[in] Line : line
+
  */
 void AT(stack *Stack, size_t numberofLine, const line *Line);
 
 /**
- * Funkcja wypisuje wielomian z wierzchołka stosu.
- * W przypadku pustego stosu wypisuje komunikat błędu.
- * @param[in] Stack : stos
- * @param[in] numberofLine : numer wiersza
+ * The function prints the polynomial at the top of the stack.
+ * Prints an error message in case of an empty stack.
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of line
  */
 void PRINT(const stack *Stack, size_t numberofLine);
 
 /**
- * Funkcja zdejmuje wielomian z wierzchołka stosu.
- * W przypadku pustego stosu wypisuje komunikat błędu.
- * @param[in] Stack : stos
- * @param[in] numberofLine : numer wiersza
+ * The function pops the polynomial from the top of the stack.
+ * Prints an error message in case of an empty stack.
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of line
  */
 void POP(stack *Stack, size_t numberofLine);
 
 /**
- * Funkcja wczytuje rozmiar tablicy wielomianów i jeśli nie następuje żaden błąd,
- * zdejmuje odpowiednią liczbę wielomianów ze stosu i wkłada na wierzch wynik składania.
- * W przypadku błędu wypisuje odpowiedni komunikat.
- * @param[in,out] Stack : stos
- * @param[in] numberofLine : numer wiersza
- * @param[in] Line : wiersz
+ * The function loads the size of an array of polynomials and if no error occurs,
+ * removes the appropriate number of polynomials from the stack and puts the fold result on top.
+ * In case of an error, it prints an appropriate message.
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of line
+ * @param[in] Line : line
  */
 void COMPOSE(stack *Stack, size_t numberofLine, const line *Line);
 
