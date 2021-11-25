@@ -1,5 +1,5 @@
 /** @file
-  Plik przechowujący funkcję służacą do bezpiecznego alokowania pamięci.
+  A file that stores a function for safely allocating memory.
 
   @author Maja Wiśniewska <mw429666.students.mimuw.edu.pl>
   @date 2021
@@ -11,10 +11,10 @@
 #include <stdlib.h>
 
 /**
- * Funkcja alokuje @p size bajtów, o ile to możliwe. 
- * W przeciwnym przypadku zakańcza awaryjnie program z kodem 1.
- * @param[in] size : liczba bajtów
- * @return wskaźnik typu void
+ * The function will allocate @p size bytes, if possible.
+ * Otherwise it terminates the program with code 1 emergency.
+ * @param[in] size : number of bytes
+ * @return type void pointer
  */
 static inline void *mallocSafe(size_t size) {
     void *pointer = malloc(size);
