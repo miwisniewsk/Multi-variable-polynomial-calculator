@@ -1,5 +1,5 @@
 /** @file
-  Implementacja kalkulatora wielomianów rzadkich wielu zmiennych.
+  Multivariable polynomial calculator implementation.
 
   @author Maja Wiśniewska <mw429666.students.mimuw.edu.pl>
   @date 2021
@@ -11,11 +11,10 @@
 #include "savePoly.h"
 
 /**
- * Funkcja rozpoznaje komendę. W przypadku gdy wiersz nie jest
- * żadną z komend wypisuje komunikat błędu.
- * @param[in] Line : wiersz
- * @param[in,out] Stack : stos
- * @param[in] numberofLine : numer wiersza
+ * Function recognize the command.
+ * @param[in] Line : line
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of line
  */
 static void command(const line *Line, stack *Stack, size_t numberofLine) {
     bool done = false;
@@ -85,12 +84,11 @@ static void command(const line *Line, stack *Stack, size_t numberofLine) {
 }
 
 /**
- * Funkcja rozpoznaje, czy wiersz zawiera komendę czy wielomian i dalej
- * zapisuje wielomian lub wykonuje komendę. W przypadku błędu wypisuje
- * odpowiedni komunikat, a puste wiersze ignoruje. Potem zwalnia wiersz.
- * @param[in,out] Line : wiersz
- * @param[in,out] Stack : stos
- * @param[in] numberofLine : numer wiersza
+ * Function recognize if line contains command or polynomial and
+ * then save it and frees Line. Function ignores empty lines.
+ * @param[in,out] Line : line
+ * @param[in,out] Stack : stack
+ * @param[in] numberofLine : number of Line
  */
 static void recognize(line *Line, stack *Stack, size_t numberofLine) {
     if (Line->numberofLetters != 0) {
@@ -108,9 +106,8 @@ static void recognize(line *Line, stack *Stack, size_t numberofLine) {
 }
 
 /**
- * Funkcja wczytuje wiersze znak po znaku i wykonuje odpowiednie operacje.
- * Ignoruje wiersze zaczynające się znakiem "#".
- * @param[in,out] Stack : stos
+ * Function reads input char by char and ignores lines started with "#".
+ * @param[in,out] Stack : stack
  */
 static void readInput(stack *Stack) {
     int k = getchar();
@@ -137,9 +134,8 @@ static void readInput(stack *Stack) {
 }
 
 /**
- * Funkcja wtworzy pusty stos, wczytuje wiersze i wykonuje komendy, 
- * a potem czyści stos.
- * @return 0 w przypadku poprawnego wykonania, w przeciwnym przypadku kod błędu.
+ * Function create empty stack, read input and performs commands.
+ * @return 0 when performed correctly, error code otherwise.
  */
 int main(void) {
     stack Stack = Init();
