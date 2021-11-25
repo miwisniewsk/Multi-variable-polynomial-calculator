@@ -1,5 +1,5 @@
 /** @file
-  Plik zawiera implementację funkcji zawartych w pilku stack.h
+  The file contains the implementation of functions contained in the file stack.h
 
   @author Maja Wiśniewska <mw429666.students.mimuw.edu.pl>
   @date 2021
@@ -9,8 +9,8 @@
 #include "stack.h"
 
 /**
- * Prosta funkcja zwracająca w przybliżeniu podwojoną wartość.
- * @param[in] n : liczba całkowita
+ * A simple function that returns approximately twice the value.
+ * @param[in] n : integer
  * @return result
  */
 static size_t more(size_t n) {
@@ -20,8 +20,8 @@ static size_t more(size_t n) {
 }
 
 /**
- * Funkcja powiększająca stos.
- * @param[in,out] Stack : stos
+ * A function to enlarge the stack.
+ * @param[in,out] Stack : stack
  */
 static void enlargeStack(stack *Stack) {
     Stack->sizeofArray = more(Stack->sizeofArray);
