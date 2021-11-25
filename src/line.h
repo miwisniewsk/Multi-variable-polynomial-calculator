@@ -1,5 +1,5 @@
 /** @file
-  Plik zawiera strukturę wiersza i interfejs funkcji tworzenia i powiększania wiersza
+  The file contains the row structure and the row creation and magnification interface
 
   @author Maja Wiśniewska <mw429666.students.mimuw.edu.pl>
   @date 2021
@@ -11,23 +11,23 @@
 #include <stdio.h>
 
 /**
- * To jest struktura przechowująca wiersz wejścia.
+ * This is the structure that holds the line of entry.
  */
 typedef struct{
-    char *letters;           ///< tablica znaków
-    size_t numberofLetters;  ///< ilość znaków
-    size_t sizeofArray;      ///< długość tablicy
+    char *letters;           ///< array of characters
+    size_t numberofLetters;  ///< number of characters
+    size_t sizeofArray;      ///< array length
 } line;
 
 /**
- * Funkcja tworzy pusty wiersz.
- * @return wiersz
+ * The function creates an empty line.
+ * @return line
  */
 line *createaLine(void);
 
 /**
- * Funkcja powiększa wiersz.
- * @param[in,out] Line : wiersz
+ * The function enlarges the row.
+ * @param[in,out] Line : line
  */
 void enlargeLine(line *Line);
 
