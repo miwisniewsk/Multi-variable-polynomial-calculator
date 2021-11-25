@@ -1,5 +1,5 @@
 /** @file
-  Interfejs klasy wielomianów rzadkich wielu zmiennych
+  Multivariable polynomial calss interface.
 
   @authors Jakub Pawlewicz <pan@mimuw.edu.pl>, Marcin Peczarski <marpe@mimuw.edu.pl>, 
   Maja Wiśniewska <mw429666.students.mimuw.edu.pl>
@@ -15,66 +15,66 @@
 #include <stddef.h>
 #include <stdio.h>
 
-/** To jest typ reprezentujący współczynniki. */
+/** This is a type representing coefficients. */
 typedef long poly_coeff_t;
 
-/** To jest typ reprezentujący wykładniki. */
+/** This is a type representing exponent. */
 typedef int poly_exp_t;
 
 struct Mono;
 
 /**
- * To jest struktura przechowująca wielomian.
- * Wielomian jest albo liczbą całkowitą, czyli wielomianem stałym
- * (wtedy `arr == NULL`), albo niepustą listą jednomianów (wtedy `arr != NULL`).
+ * This is the structure representig polynomial.
+ * Polynomial is either an integer (then 'arr == NULL'), 
+ * or non-empty list of monomials (then `arr != NULL`).
  */
 typedef struct Poly {
   /**
-  * To jest unia przechowująca współczynnik wielomianu lub
-  * liczbę jednomianów w wielomianie.
-  * Jeżeli `arr == NULL`, wtedy jest to współczynnik będący liczbą całkowitą.
-  * W przeciwnym przypadku jest to niepusta lista jednomianów.
+  * This is the union that holds the coefficient of the polynomial or
+  * the number of monomials in the polynomial.
+  * If `arr == NULL` then it is an integer coefficient.
+  * Otherwise, it is a non-empty list of monomials. 
   */
   union {
-    poly_coeff_t coeff; ///< współczynnik
-    size_t       size; ///< rozmiar wielomianu, liczba jednomianów
+    poly_coeff_t coeff; ///< coefficient
+    size_t       size; ///< number of monomials
   };
-  /** To jest tablica przechowująca listę jednomianów. */
+  /** This is an array that holds a list of monomials */
   struct Mono *arr;
 } Poly;
 
 /**
- * To jest struktura przechowująca jednomian.
- * Jednomian ma postać @f$px_i^n@f$.
- * Współczynnik @f$p@f$ może też być
- * wielomianem nad kolejną zmienną @f$x_{i+1}@f$.
+ * This is the monomial holding structure.
+ * The monomial takes the form @ f$px_i^n@f$.
+ * The @f$p@f$ factor can also be
+ * polynomial over the next variable @f$x_{i + 1}@f$.
  */
 typedef struct Mono {
-  Poly p; ///< współczynnik
-  poly_exp_t exp; ///< wykładnik
+  Poly p; ///< factor
+  poly_exp_t exp; ///< exponent
 } Mono;
 
 /**
- * Daje wartość wykładnika jendomianu.
- * @param[in] m : jednomian
- * @return wartość wykładnika jednomianu
+ * Gives the value of the monomial exponent.
+ * @param[in] m : monomial
+ * @return the value of the exponent of the monomial
  */
 static inline poly_exp_t MonoGetExp(const Mono *m) {
   return m->exp;
 }
 
 /**
- * Tworzy wielomian, który jest współczynnikiem (wielomian stały).
- * @param[in] c : wartość współczynnika
- * @return wielomian
+ * Creates a polynomial that is a factor (constant polynomial).
+ * @param[in] c : value of the coefficient
+ * @return polynomial
  */
 static inline Poly PolyFromCoeff(poly_coeff_t c) {
   return (Poly) {.coeff = c, .arr = NULL};
 }
 
 /**
- * Tworzy wielomian tożsamościowo równy zeru.
- * @return wielomian
+ * Creates a polynomial identically equal to zero.
+ * @return polynomial
  */
 static inline Poly PolyZero(void) {
   return PolyFromCoeff(0);
@@ -83,11 +83,11 @@ static inline Poly PolyZero(void) {
 static inline bool PolyIsCoeff(const Poly *p);
 
 /**
- * Tworzy jednomian @f$px_i^n@f$.
- * Przejmuje na własność zawartość struktury wskazywanej przez @p p.
- * @param[in] p : wielomian - współczynnik jednomianu
- * @param[in] n : wykładnik
- * @return jednomian @f$px_i^n@f$
+ * Forms a monomial @f$px_i^n@f$.
+ * Takes ownership of the content of the structure pointed to by @p p.
+ * @param[in] p : polynomial - coefficient of the monomial
+ * @param[in] n : exponent
+ * @return monomial @f$px_i^n@f$
  */
 static inline Mono MonoFromPoly(const Poly *p, poly_exp_t n) {
     assert(n == 0 || !(PolyIsCoeff(p) && p->coeff == 0));
@@ -95,174 +95,176 @@ static inline Mono MonoFromPoly(const Poly *p, poly_exp_t n) {
 }
 
 /**
- * Sprawdza, czy wielomian jest współczynnikiem (czy jest to wielomian stały).
- * @param[in] p : wielomian
- * @return Czy wielomian jest współczynnikiem?
+ * Checks if the polynomial is a factor (or if it is a constant polynomial).
+ * @param[in] p : polynomial
+ * @return Is the polynomial a factor?
  */
 static inline bool PolyIsCoeff(const Poly *p) {
   return p->arr == NULL;
 }
 
 /**
- * Sprawdza, czy wielomian jest tożsamościowo równy zeru.
- * @param[in] p : wielomian
- * @return Czy wielomian jest równy zeru?
+ * Checks if the polynomial is identically equal to zero.
+ * @param[in] p : polynomial
+ * @return Is the polynomial zero?
  */
 bool PolyIsZero(const Poly *p);
 
 /**
- * Usuwa wielomian z pamięci.
- * @param[in] p : wielomian
+ * Removes a polynomial from memory.
+ * @param[in] p : polynomial
  */
 void PolyDestroy(Poly *p);
 
 /**
- * Usuwa jednomian z pamięci.
- * @param[in] m : jednomian
+ * Deletes the monomial from memory.
+ * @param[in] m : monomial
  */
 static inline void MonoDestroy(Mono *m) {
   PolyDestroy(&m->p);
 }
 
 /**
- * Robi pełną, głęboką kopię wielomianu.
- * @param[in] p : wielomian
- * @return skopiowany wielomian
+ * Make a full deep copy of a polynomial.
+ * @param[in] p : polynomial
+ * @return copied polynomial
  */
 Poly PolyClone(const Poly *p);
 
 /**
- * Robi pełną, głęboką kopię jednomianu.
- * @param[in] m : jednomian
- * @return skopiowany jednomian
+ * Makes a full, deep copy of the monomial.
+ * @param[in] m : monomial
+ * @return copied monomial
  */
 static inline Mono MonoClone(const Mono *m) {
   return (Mono) {.p = PolyClone(&m->p), .exp = m->exp};
 }
 
 /**
- * Dodaje dwa wielomiany.
- * @param[in] p : wielomian @f$p@f$
- * @param[in] q : wielomian @f$q@f$
+ * Adds two polynomials.
+ * @param[in] p : polynomial f$p@f$
+ * @param[in] q : polynomial @f$q@f$
  * @return @f$p + q@f$
  */
 Poly PolyAdd(const Poly *p, const Poly *q);
 
 /**
- * Sumuje listę jednomianów i tworzy z nich wielomian.
- * Przejmuje na własność zawartość tablicy @p monos.
- * @param[in] count : liczba jednomianów
- * @param[in] monos : tablica jednomianów
- * @return wielomian będący sumą jednomianów
+ * Sums a list of monomials and forms a polynomial from them.
+ * Takes ownership of the contents of the array @p monos.
+ * @param[in] count : number of monomials
+ * @param[in] monos : table of monomials
+ * @return polynomial being the sum of monomials
  */
 Poly PolyAddMonos(size_t count, const Mono monos[]);
 
 /**
- * Mnoży dwa wielomiany.
- * @param[in] p : wielomian @f$p@f$
- * @param[in] q : wielomian @f$q@f$
+ * Multiplies two polynomials.
+ * @param[in] p : polynomial @f$p@f$
+ * @param[in] q : polynomial @f$q@f$
  * @return @f$p * q@f$
  */
 Poly PolyMul(const Poly *p, const Poly *q);
 
 /**
- * Zwraca przeciwny wielomian.
- * @param[in] p : wielomian @f$p@f$
+ * Returns the opposite polynomial.
+ * @param[in] p : polynomial @f$p@f$
  * @return @f$-p@f$
  */
 Poly PolyNeg(const Poly *p);
 
 /**
- * Odejmuje wielomian od wielomianu.
- * @param[in] p : wielomian @f$p@f$
- * @param[in] q : wielomian @f$q@f$
+ * Subtracts a polynomial from a polynomial.
+ * @param[in] p : polynomial @f$p@f$
+ * @param[in] q : polynomial @f$q@f$
  * @return @f$p - q@f$
  */
 Poly PolySub(const Poly *p, const Poly *q);
 
 /**
- * Zwraca stopień wielomianu ze względu na zadaną zmienną (-1 dla wielomianu
- * tożsamościowo równego zeru). Zmienne indeksowane są od 0.
- * Zmienna o indeksie 0 oznacza zmienną główną tego wielomianu.
- * Większe indeksy oznaczają zmienne wielomianów znajdujących się
- * we współczynnikach.
- * @param[in] p : wielomian
- * @param[in] var_idx : indeks zmiennej
- * @return stopień wielomianu @p p z względu na zmienną o indeksie @p var_idx
+ * Returns the degree of a polynomial given the variable (-1 for a polynomial
+ * identically equal to zero). Variables are indexed from 0.
+ * Variable with index 0 means the main variable of this polynomial.
+ * Larger indices denote the variables of the polynomials located
+ * in coefficients.
+ * @param[in] p : polynomial
+ * @param[in] var_idx : variable index
+ * @return degree of polynomial @p p due to the variable with index @p var_idx
  */
 poly_exp_t PolyDegBy(const Poly *p, size_t var_idx);
 
 /**
- * Zwraca stopień wielomianu (-1 dla wielomianu tożsamościowo równego zeru).
- * @param[in] p : wielomian
- * @return stopień wielomianu @p p
+ * Returns the degree of a polynomial (-1 for a polynomial identically equal to zero).
+ * @param[in] p : polynomial
+ * @return degree of polynomial @p p
  */
 poly_exp_t PolyDeg(const Poly *p);
 
 /**
- * Sprawdza równość dwóch wielomianów.
- * @param[in] p : wielomian @f$p@f$
- * @param[in] q : wielomian @f$q@f$
+ * Checks the equality of two polynomials.
+ * @param[in] p : polynomial @f$p@f$
+ * @param[in] q : polynomial @f$q@f$
  * @return @f$p = q@f$
  */
 bool PolyIsEq(const Poly *p, const Poly *q);
 
 /**
- * Wylicza wartość wielomianu w punkcie @p x.
- * Wstawia pod pierwszą zmienną wielomianu wartość @p x.
- * W wyniku może powstać wielomian, jeśli współczynniki są wielomianami.
- * Wtedy zmniejszane są o jeden indeksy zmiennych w takim wielomianie.
- * Formalnie dla wielomianu @f$p(x_0, x_1, x_2, \ldots)@f$ wynikiem jest
- * wielomian @f$p(x, x_0, x_1, \ldots)@f$.
- * @param[in] p : wielomian @f$p@f$
- * @param[in] x : wartość argumentu @f$x@f$
+ * Computes the value of a polynomial at a point @p x.
+ * Inserts a value under the first variable of the polynomial @p x.
+ * The result can be a polynomial if the coefficients are polynomials.
+ * Then the variable indices in such a polynomial are decreased by one.
+ * Formally for a polynomial @f$p(x_0, x_1, x_2, \ldots)@f$ the result is
+ * polynomial @f$p(x, x_0, x_1, \ldots)@f$.
+ * @param[in] p : polynomial @f$p@f$
+ * @param[in] x : argument value @f$x@f$
  * @return @f$p(x, x_0, x_1, \ldots)@f$
  */
 Poly PolyAt(const Poly *p, poly_coeff_t x);
 
 /**
- * Funkcja wypisuje wielomian.
- * @param[in] p : wielomian
+ * The function prints the polynomial.
+ * @param[in] p : polynomial
  */
 void PrintPoly(const Poly *p);
 
 /**
- * Sumuje listę jednomianów i tworzy z nich wielomian. Przejmuje na własność
- * pamięć wskazywaną przez @p monos i jej zawartość. Może dowolnie modyfikować
- * zawartość tej pamięci. Zakładamy, że pamięć wskazywana przez @p monos
- * została zaalokowana na stercie. Jeśli @p count lub @p monos jest równe zeru
- * (NULL), tworzy wielomian tożsamościowo równy zeru.
- * @param[in] count : liczba jednomianów
- * @param[in] monos : tablica jednomianów
- * @return wielomian będący sumą jednomianów
+ * Sums a list of monomials and forms a polynomial from them. Takes over ownership
+ * the memory pointed to by @p monos and its contents. It can freely modify
+ * the contents of this memory. We assume the memory pointed to by @p monos
+ * has been allocated to the heap. If @p count or @p monos is zero
+ * (NULL), creates a polynomial identically equal to zero.
+ * @param[in] count : number of monomials
+ * @param[in] monos : table of monomials
+ * @return polynomial being the sum of monomials
  */
 Poly PolyOwnMonos(size_t count, Mono *monos);
 
 /**
- * Sumuje listę jednomianów i tworzy z nich wielomian. Nie modyfikuje zawartości
- * tablicy @p monos. Jeśli jest to wymagane, to wykonuje pełne kopie jednomianów
- * z tablicy @p monos. Jeśli @p count lub @p monos jest równe zeru (NULL),
- * tworzy wielomian tożsamościowo równy zeru.
- * @param[in] count : liczba jednomianów
- * @param[in] monos : tablica jednomianów
- * @return wielomian będący sumą jednomianów
+ * Sums a list of monomials and forms a polynomial from them. Does not modify the content
+ * array @p monos. If required, it makes complete copies of monomials
+ * from the @p monos array. If @p count or @p monos is NULL,
+ * creates a polynomial identically equal to zero.
+ * @param[in] count : number of monomials
+ * @param[in] monos : table of monomials
+ * @return polynomial being the sum of monomials
  */
 Poly PolyCloneMonos(size_t count, const Mono monos[]);
 
 /**
- * Funkcja potęguje wielomian, zwraca wynik tego potęgowania.
- * @param[in] p : wielomian
- * @param[in] exp : potęga
- * @return wielomian
+ * The function exponentiates a polynomial, returns the result of the exponentiation.
+ * @param[in] p : polynomial
+ * @param[in] exp : power
+ * @return polynomial
  */
 Poly PolyExp(const Poly *p, poly_exp_t exp);
 
 /**
- * Funkcja zwraca wielomian będący wynikiem składania wielomianów.
- * @param[in] p : wielomian
- * @param[in] k : rozmiar tablicy
- * @param[in] q : tablica wielomianów
- * @return wielomian będący wynikiem składania
+ * The function returns a polynomial that is the result of polynomial composition.
+ * Polynomial compoziton means substitution of the next varaibles by
+ * polynomials in an array.
+ * @param[in] p : polynomial
+ * @param[in] k : array size
+ * @param[in] q : array of polynomials
+ * @return the resulting polynomial
  */
 Poly PolyCompose(const Poly *p, size_t k, const Poly q[]);
 
