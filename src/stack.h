@@ -1,5 +1,5 @@
 /** @file
-  Interfejs klasy stosu
+  Stack class interface
 
   @author Maja Wiśniewska <mw429666.students.mimuw.edu.pl>
   @date 2021
@@ -11,61 +11,61 @@
 #include "poly.h"
 
 /**
- * Krótszy zapis typu long long int
+ * Shorter type notation of long long int
  */
 typedef long long int llint;
 
 /**
- * Krótszy zapis typu unsigned long long int
+ * Shorter type notation of unsigned long long int
  */
 typedef unsigned long long int ullint;
 
 /**
- * To jest struktura przechowująca stos wielomianów.
+ * This is the structure holding the stack of polynomials.
  */
 typedef struct {
-    Poly *Array;         ///< tablica wielomianów
-    size_t sizeofArray;  ///< rozmiar tablicy
-    ullint top;          ///< ilość elementow na stosie
+    Poly *Array;         ///< array of polynomials
+    size_t sizeofArray;  ///< array size
+    ullint top;          ///< number of items on the stack
 } stack;
 
 /**
- * Funkcja sprawdza, czy stos jest pusty.
- * @param[in] Stack : stos
- * @return Czy stos jest pusty?
+ * The function checks if the stack is empty.
+ * @param[in] Stack : stack
+ * @return Is the stack empty?
  */
 bool Empty(const stack *Stack);
 
 /**
- * Funkcja tworzy pusty stos.
- * @return pusty stos
+ * The function creates an empty stack.
+ * @return empty stack.
  */
 stack Init();
 
 /**
- * Funkcja wkłada wielomian na stos.
- * @param[in,out] Stack : stos
- * @param[in] p : wielomian
+ * The function puts a polynomial on the stack.
+ * @param[in,out] Stack : stack
+ * @param[in] p : polynomial
  */
 void Push(stack *Stack, Poly p);
 
 /**
- * Funkcja zdejmuje wielomian z wierzchołka stosu.
- * @param[in,out] Stack : stos
- * @return wielomian
+ * The function pops the polynomial from the top of the stack.
+ * @param[in,out] Stack : stack
+ * @return polynomial
  */
 Poly Pop(stack *Stack);
 
 /**
- * Funkcja zwraca wielomian z wierzchołka stosu.
- * @param[in] Stack : stos
- * @return wielomian
+ * The function returns the polynomial at the top of the stack.
+ * @param[in] Stack : stack
+ * @return polynomial
  */
 Poly Top(const stack *Stack);
 
 /**
- * Funkcja czyści cały stos.
- * @param[in,out] Stack : stos
+ * The function clears the entire stack.
+ * @param[in,out] Stack : stack
  */
 void Clear(stack *Stack);
 
